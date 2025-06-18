@@ -1,16 +1,17 @@
+from scrapers.reddit_scraper import fetch_reddit_ideas
 from app.utils.gpt import generate_summary
 
 def get_ideas():
-    ideas = [
-        {"title": "AI Video Script Generator", "trend_score": 88, "sentiment": 0.72},
-        {"title": "Ghost Kitchen for Vegan Desserts", "trend_score": 79, "sentiment": 0.65}
-    ]
+    titles = fetch_reddit_ideas()  # from r/entrepreneur
 
-    for idea in ideas:
-        idea["summary"] = generate_summary(
-            title=idea["title"],
-            trend_score=idea["trend_score"],
-            sentiment=idea["sentiment"]
-        )
+    ideas = []
+    for title in titles:
+        idea = {
+            "title": title,
+            "trend_score": 80,  # Dummy for now
+            "sentiment": 0.7,   # Dummy for now
+        }
+        idea["summary"] = generate_summary(title, idea["trend_score"], idea["sentiment"])
+        ideas.append(idea)
 
     return ideas
