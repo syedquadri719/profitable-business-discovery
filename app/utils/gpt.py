@@ -13,8 +13,11 @@ Sentiment Score: {sentiment}
 Respond in 1–2 sentences.
 """
 
+    if not openai.api_key:
+        raise Exception("Missing OpenAI API key")
+
     response = openai.ChatCompletion.create(
-        model="gpt-4o",  # use "gpt-3.5-turbo" if you're on the free tier
+        model="gpt-4o",  # or "gpt-3.5-turbo"
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7,
     )
